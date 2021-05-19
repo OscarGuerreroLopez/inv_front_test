@@ -24,7 +24,7 @@ export const Intro = (): JSX.Element => {
             fontSize,
           }}
         >
-          Some text goes here
+          Some text goes here.
         </Text>
       </Flex>
     </CustomCard>
