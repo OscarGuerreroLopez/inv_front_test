@@ -8,8 +8,13 @@ const fontSize = ["1", "2", "2", "3", "3", "4"];
 
 export const Intro = (): JSX.Element => {
   const history = useHistory();
-  const clickedDetails = (): void => {
+
+  const clickedInventory = (): void => {
     history.push(`/inventory`);
+  };
+
+  const clickedProducts = (): void => {
+    history.push(`/products`);
   };
   return (
     <CustomCard>
@@ -32,8 +37,49 @@ export const Intro = (): JSX.Element => {
           Some text goes here...
         </Text>
       </Flex>
-      <Flex flexWrap="wrap">
-        <Button onClick={(): void => clickedDetails()}>Details</Button>
+
+      <Flex
+        justifyContent="center"
+        width="100%"
+        flexWrap="wrap"
+        marginBottom="4"
+        marginTop="4"
+        backgroundColor="yellow"
+      >
+        <Flex
+          sx={{
+            width: ["100%", "100%", "50%", "50%", "50%"],
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            sx={{
+              fontSize,
+              color: "blue",
+              cursor: "pointer",
+            }}
+            onClick={(): void => clickedInventory()}
+          >
+            Check the Inventory
+          </Text>
+        </Flex>
+        <Flex
+          sx={{
+            width: ["100%", "100%", "50%", "50%", "50%"],
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            sx={{
+              fontSize,
+              color: "blue",
+              cursor: "pointer",
+            }}
+            onClick={(): void => clickedProducts()}
+          >
+            Check Products
+          </Text>
+        </Flex>
       </Flex>
     </CustomCard>
   );
