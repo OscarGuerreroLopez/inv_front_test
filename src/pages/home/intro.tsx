@@ -1,10 +1,39 @@
 import React from "react";
-import { Text, Flex, Button } from "rebass";
+import { Text, Flex } from "rebass";
 import { useHistory } from "react-router-dom";
 
 import { CustomCard } from "../../components";
 
 const fontSize = ["1", "2", "2", "3", "3", "4"];
+
+interface ILinkItemsProps {
+  text: string;
+  funct: () => void;
+}
+
+const LinkItems: React.FC<ILinkItemsProps> = ({ text, funct }): JSX.Element => {
+  return (
+    <Flex
+      sx={{
+        width: ["100%", "100%", "50%", "50%", "50%"],
+        justifyContent: "center",
+        marginTop: "2",
+        marginBottom: "2",
+      }}
+    >
+      <Text
+        sx={{
+          fontSize,
+          color: "blue",
+          cursor: "pointer",
+        }}
+        onClick={(): void => funct()}
+      >
+        {text}
+      </Text>
+    </Flex>
+  );
+};
 
 export const Intro = (): JSX.Element => {
   const history = useHistory();
@@ -44,42 +73,9 @@ export const Intro = (): JSX.Element => {
         flexWrap="wrap"
         marginBottom="4"
         marginTop="4"
-        backgroundColor="yellow"
       >
-        <Flex
-          sx={{
-            width: ["100%", "100%", "50%", "50%", "50%"],
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            sx={{
-              fontSize,
-              color: "blue",
-              cursor: "pointer",
-            }}
-            onClick={(): void => clickedInventory()}
-          >
-            Check the Inventory
-          </Text>
-        </Flex>
-        <Flex
-          sx={{
-            width: ["100%", "100%", "50%", "50%", "50%"],
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            sx={{
-              fontSize,
-              color: "blue",
-              cursor: "pointer",
-            }}
-            onClick={(): void => clickedProducts()}
-          >
-            Check Products
-          </Text>
-        </Flex>
+        <LinkItems text="Check Inventory" funct={clickedInventory} />
+        <LinkItems text=" Check Products" funct={clickedProducts} />
       </Flex>
     </CustomCard>
   );
