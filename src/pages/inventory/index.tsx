@@ -1,26 +1,28 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Text, Flex } from "rebass";
+import { Flex } from "rebass";
 import { withRouter } from "react-router";
 
 import { axiosFetcher, Source } from "../../utils/http";
 import { CustomCard } from "../../components";
+import { DisplayItems } from "./displayItems";
 
 export interface InventoryItem {
-  artId: string;
+  art_id: string;
   name: string;
   stock: string;
 }
 
-const fontSize = ["1", "2", "2", "3", "3", "4"];
-
 const Inventory = withRouter((): JSX.Element => {
-  const [inventoryData, setInventoryData] = useState<IObjectLiteral>([]);
+  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const searchInventory = async (): Promise<void> => {
-      const result = await axiosFetcher("inventory", { method: "GET" });
+      const result = (await axiosFetcher("inventory", {
+        method: "GET",
+      })) as InventoryItem[];
 
       setInventoryData(result);
     };
@@ -39,29 +41,20 @@ const Inventory = withRouter((): JSX.Element => {
         <Flex justifyContent="center" flexWrap="wrap">
           <CustomCard>
             <Flex flexWrap="wrap" justifyContent="center">
-              {inventoryData?.map((item: InventoryItem) => {
-                return (
-                  <Flex
-                    sx={{
-                      flexWrap: "wrap",
-                      mt: 2,
-                      borderRadius: 2,
-                      boxShadow: "0 0 16px rgba(0, 0, 0, .25)",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                    key={uuidv4()}
-                  >
-                    <Text
-                      sx={{
-                        fontSize,
-                      }}
-                    >
-                      {item.name}
-                    </Text>
-                  </Flex>
-                );
-              })}
+              <Flex
+                sx={{
+                  flexWrap: "wrap",
+                  mt: 2,
+                  borderRadius: 2,
+                  boxShadow: "0 0 16px rgba(0, 0, 0, .25)",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                {inventoryData?.map((item: InventoryItem) => {
+                  return <DisplayItems {...item} key={uuidv4()} />;
+                })}
+              </Flex>
             </Flex>
           </CustomCard>
         </Flex>
