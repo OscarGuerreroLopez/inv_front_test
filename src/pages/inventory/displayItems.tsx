@@ -4,7 +4,8 @@ import { Text, Flex } from "rebass";
 
 import { InventoryItem } from ".";
 
-const fontSize = ["25px", "25px", "25px", "50px", "50px"];
+const fontSizeTitle = ["25px", "25px", "25px", "50px", "50px"];
+const fontSizeItem = ["20px", "20px", "20px", "30px", "30px"];
 
 export const DisplayItems: React.FC<InventoryItem> = ({
   ...props
@@ -21,14 +22,20 @@ export const DisplayItems: React.FC<InventoryItem> = ({
           marginBottom: "2",
         }}
       >
-        <Text sx={{ width: ["100%"], textAlign: "center", fontSize }}>
+        <Text
+          sx={{ width: ["100%"], textAlign: "center", fontSize: fontSizeTitle }}
+        >
           {name.toUpperCase()}
         </Text>
 
-        <Text sx={{ width: ["100%"], textAlign: "center", fontSize }}>
+        <Text
+          sx={{ width: ["100%"], textAlign: "center", fontSize: fontSizeItem }}
+        >
           art_id: {art_id}
         </Text>
-        <Text sx={{ width: ["100%"], textAlign: "center", fontSize }}>
+        <Text
+          sx={{ width: ["100%"], textAlign: "center", fontSize: fontSizeItem }}
+        >
           stock: {stock}
         </Text>
       </Flex>

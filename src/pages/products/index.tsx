@@ -12,17 +12,20 @@ export interface Product {
   name: string;
   contain_articles: {
     art_id: string;
+    name: string;
     amount_of: string;
   }[];
 }
 
 const Products = withRouter((): JSX.Element => {
-  const [productsData, setproductsData] = useState<IObjectLiteral>([]);
+  const [productsData, setproductsData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const searchInventory = async (): Promise<void> => {
-      const result = await axiosFetcher("products", { method: "GET" });
+      const result = (await axiosFetcher("products", {
+        method: "GET",
+      })) as Product[];
 
       setproductsData(result);
     };
@@ -35,6 +38,21 @@ const Products = withRouter((): JSX.Element => {
     };
   }, []);
 
+  const deleteProduct = async (prodName: string): Promise<void> => {
+    const deleteResult = await axiosFetcher(
+      `products?where[0][name]=${prodName}`,
+      { method: "DELETE" },
+    );
+
+    if (deleteResult.message) {
+      const newProductsData = productsData.filter((item) => {
+        return item.name !== prodName;
+      });
+
+      setproductsData(newProductsData);
+    }
+  };
+
   return (
     <>
       {!isLoading && (
@@ -42,7 +60,13 @@ const Products = withRouter((): JSX.Element => {
           <CustomCard>
             <Flex flexWrap="wrap" justifyContent="center">
               {productsData?.map((item: Product) => {
-                return <DisplayProducts {...item} key={uuidv4()} />;
+                return (
+                  <DisplayProducts
+                    {...item}
+                    deleteProduct={deleteProduct}
+                    key={uuidv4()}
+                  />
+                );
               })}
             </Flex>
           </CustomCard>

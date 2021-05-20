@@ -41,20 +41,9 @@ const Inventory = withRouter((): JSX.Element => {
         <Flex justifyContent="center" flexWrap="wrap">
           <CustomCard>
             <Flex flexWrap="wrap" justifyContent="center">
-              <Flex
-                sx={{
-                  flexWrap: "wrap",
-                  mt: 2,
-                  borderRadius: 2,
-                  boxShadow: "0 0 16px rgba(0, 0, 0, .25)",
-                  justifyContent: "center",
-                  width: "100%",
-                }}
-              >
-                {inventoryData?.map((item: InventoryItem) => {
-                  return <DisplayItems {...item} key={uuidv4()} />;
-                })}
-              </Flex>
+              {inventoryData?.map((item: InventoryItem) => {
+                return <DisplayItems {...item} key={uuidv4()} />;
+              })}
             </Flex>
           </CustomCard>
         </Flex>
