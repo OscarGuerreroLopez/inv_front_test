@@ -3,32 +3,15 @@ import React from "react";
 import { Text, Flex, Button } from "rebass";
 import { v4 as uuidv4 } from "uuid";
 import { Product } from ".";
+import { ProductItems } from "./productItems";
 
-const fontSizeTitle = ["25px", "25px", "25px", "50px", "50px"];
-const fontSizeItem = ["20px", "20px", "20px", "30px", "30px"];
+const fontSize = ["25px", "25px", "25px", "50px", "50px"];
 
-interface IPROPS extends Product {
+interface DisplayProducts extends Product {
   deleteProduct: (name: string) => void;
 }
 
-const ProductItems: React.FC<{ name: string; value: string }> = ({
-  name,
-  value,
-}): JSX.Element => {
-  return (
-    <Text
-      sx={{
-        width: ["100%"],
-        textAlign: "center",
-        fontSize: fontSizeItem,
-      }}
-    >
-      {name}: {value}
-    </Text>
-  );
-};
-
-export const DisplayProducts: React.FC<IPROPS> = ({
+export const DisplayProducts: React.FC<DisplayProducts> = ({
   ...props
 }): JSX.Element => {
   const { name, contain_articles, deleteProduct } = props;
@@ -44,9 +27,7 @@ export const DisplayProducts: React.FC<IPROPS> = ({
           justifyContent: "center",
         }}
       >
-        <Text
-          sx={{ width: ["100%"], textAlign: "center", fontSize: fontSizeTitle }}
-        >
+        <Text sx={{ width: ["100%"], textAlign: "center", fontSize }}>
           {name.toUpperCase()}
         </Text>
         {contain_articles.map((item) => {
