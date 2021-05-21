@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Flex } from "rebass";
 import { withRouter } from "react-router";
+import { useHistory } from "react-router-dom";
 
 import { axiosFetcher, Source } from "../../utils/http";
 import { CustomCard } from "../../components";
@@ -20,14 +21,20 @@ export interface Product {
 const Products = withRouter((): JSX.Element => {
   const [productsData, setproductsData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     const searchInventory = async (): Promise<void> => {
-      const result = (await axiosFetcher("products", {
+      await axiosFetcher("products", {
         method: "GET",
-      })) as Product[];
-
-      setproductsData(result);
+      })
+        .then((result) => setproductsData(result))
+        .catch(() => {
+          // There are better ways to handle and error
+          // for simplicity I just redirect home
+          // try and catch don`t really work well inside useEffect
+          history.push(`/`);
+        });
     };
     setIsLoading(true);
     searchInventory();
@@ -36,7 +43,7 @@ const Products = withRouter((): JSX.Element => {
     return (): void => {
       Source.cancel("Dont need you anymore thanks");
     };
-  }, []);
+  }, [history]);
 
   const deleteProduct = async (prodName: string): Promise<void> => {
     const deleteResult = (await axiosFetcher(
@@ -59,7 +66,7 @@ const Products = withRouter((): JSX.Element => {
         <Flex justifyContent="center" flexWrap="wrap">
           <CustomCard>
             <Flex flexWrap="wrap" justifyContent="center">
-              {productsData?.map((item: Product) => {
+              {productsData.map((item: Product) => {
                 return (
                   <DisplayProducts
                     {...item}

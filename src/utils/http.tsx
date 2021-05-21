@@ -11,8 +11,8 @@ const newCancelToken = (): void => {
 export const axiosFetcher = async (
   url: string,
   config: AxiosRequestConfig = {},
-  // token?: string | undefined,
-): Promise<IObjectLiteral | IObjectLiteral[]> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> => {
   newCancelToken();
   try {
     const axiosConfig = { ...config, cancelToken: Source.token };
