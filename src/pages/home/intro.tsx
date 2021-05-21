@@ -35,7 +35,11 @@ export const Intro = (): JSX.Element => {
             fontSize,
           }}
         >
-          Some text goes here...
+          Simple web app to play with the back end that I’ve done for this test.
+          You can click on inventory to see the inventory in real time. If you
+          delete a product, which you can do at the products page, the inventory
+          will be updated when you go back to it. I didn’t have much time to
+          make it look nice, but at least it is responsive
         </Text>
       </Flex>
 

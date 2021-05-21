@@ -12,7 +12,7 @@ export const axiosFetcher = async (
   url: string,
   config: AxiosRequestConfig = {},
   // token?: string | undefined,
-): Promise<IObjectLiteral> => {
+): Promise<IObjectLiteral | IObjectLiteral[]> => {
   newCancelToken();
   try {
     const axiosConfig = { ...config, cancelToken: Source.token };

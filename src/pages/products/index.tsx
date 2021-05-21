@@ -39,10 +39,10 @@ const Products = withRouter((): JSX.Element => {
   }, []);
 
   const deleteProduct = async (prodName: string): Promise<void> => {
-    const deleteResult = await axiosFetcher(
+    const deleteResult = (await axiosFetcher(
       `products?where[0][name]=${prodName}`,
       { method: "DELETE" },
-    );
+    )) as IObjectLiteral;
 
     if (deleteResult.message) {
       const newProductsData = productsData.filter((item) => {
